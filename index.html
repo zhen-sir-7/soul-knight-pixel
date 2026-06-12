@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>元气骑士 · Soul Knight</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+body {
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+}
+canvas {
+  border: 2px solid #333;
+  border-radius: 4px;
+  image-rendering: pixelated;
+  cursor: crosshair;
+}
+#gameContainer {
+  position: relative;
+  display: inline-block;
+}
+#startScreen, #gameOverScreen {
+  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 20px; color: #fff; text-align: center;
+  pointer-events: auto;
+  background: rgba(0,0,0,0.7);
+  z-index: 10;
+}
+#startScreen h1 {
+  font-size: 52px;
+  text-shadow: 0 0 30px #4fc3f7, 0 0 60px #0288d1;
+  color: #fff;
+  letter-spacing: 10px;
+  font-weight: 900;
+}
+#startScreen .subtitle {
+  font-size: 16px; color: #90caf9;
+  letter-spacing: 4px;
+}
+#startScreen .controls-info {
+  font-size: 14px; color: #888; line-height: 2.2;
+  margin: 10px 0;
+}
+.btn {
+  pointer-events: auto; padding: 14px 56px; font-size: 20px;
+  background: linear-gradient(135deg, #4fc3f7, #0288d1);
+  color: #fff; border: none; border-radius: 8px;
+  cursor: pointer; font-family: inherit; letter-spacing: 2px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 25px rgba(79, 195, 247, 0.3);
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 35px rgba(79,195,247,0.5); }
+.btn:active { transform: translateY(0); }
+#gameOverScreen h1 {
+  font-size: 42px; color: #f44336;
+  text-shadow: 0 0 20px rgba(244,67,54,0.5);
+}
+#gameOverScreen .stats { font-size: 20px; color: #ccc; line-height: 2.2; }
+#gameOverScreen .stats span { color: #4fc3f7; font-weight: bold; }
+.hidden { display: none !important; }
+.version { position: absolute; bottom: 18px; right: 24px; color: #444; font-size: 12px; pointer-events: none; z-index: 1; }
+</style>
+</head>
+<body>
+
+<div id="gameContainer">
+  <canvas id="gameCanvas"></canvas>
+
+  <div id="startScreen">
+    <h1>元气骑士</h1>
+    <div class="subtitle">— SOUL KNIGHT —</div>
+    <div class="controls-info">
+      WASD 移动 &nbsp;|&nbsp; 鼠标瞄准 &nbsp;|&nbsp; 左键射击<br>
+      E 翻滚闪避 &nbsp;|&nbsp; R 切换武器<br>
+      消灭所有怪物，突破房间，挑战BOSS！
+    </div>
+    <button class="btn" onclick="startGame()">开始冒险</button>
+  </div>
+
+  <div id="gameOverScreen" class="hidden">
+    <h1>游戏结束</h1>
+    <div class="stats">
+      通关房间: <span id="statRooms">0</span><br>
+      总击杀数: <span id="statKills">0</span><br>
+      获得金币: <span id="statCoins">0</span>
+    </div>
+    <button class="btn" onclick="restartGame()">再来一次</button>
+  </div>
+
+  <div class="version">v1.0 · 纯Canvas实现</div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
